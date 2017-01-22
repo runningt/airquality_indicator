@@ -1,4 +1,4 @@
-#import lxml
+from lxml import etree
 
 
 class Indicator(object):
