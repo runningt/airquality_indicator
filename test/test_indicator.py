@@ -12,18 +12,35 @@ class TestIndicator(object):
     def test_station_id(self, indicator):
         assert indicator.stationId == 400
 
-    def test_get_data_url(self, indicator):
-        assert indicator.get_data_url(10) == \
-            'http://powietrze.gios.gov.pl/pjp/current/station_details/table/10/1/0'
-        assert indicator.get_data_url('test') == \
-            'http://powietrze.gios.gov.pl/pjp/current/station_details/table/test/1/0'
-        assert indicator.get_data_url('') == \
-            'http://powietrze.gios.gov.pl/pjp/current/station_details/table//1/0'
+    @pytest.mark.parametrize('defaultStationId', [400,10,'test', ''])
+    def test_get_data_url_default(self, indicator, defaultStationId):
+        indicator.stationId =defaultStationId
+        assert indicator.get_data_url() == \
+            'http://api.gios.gov.pl/pjp-api/rest/data/getData/%s' % defaultStationId
 
-    def test_get_details_url(self, indicator):
-        assert indicator.get_details_url(400) == \
-            'http://powietrze.gios.gov.pl/pjp/current/station_details/info/400'
-        assert indicator.get_details_url('test') == \
-            'http://powietrze.gios.gov.pl/pjp/current/station_details/info/test'
-        assert indicator.get_details_url('') == \
-            'http://powietrze.gios.gov.pl/pjp/current/station_details/info/'
+    @pytest.mark.parametrize('stationId', [400,10,'test', ''])
+    def test_get_data_url(self, indicator, stationId):
+        assert indicator.get_data_url(stationId) == \
+            'http://api.gios.gov.pl/pjp-api/rest/data/getData/%s' % stationId
+
+    @pytest.mark.parametrize('defaultStationId', [400,10,'test', ''])
+    def test_get_aqindex_url_default(self, indicator, defaultStationId):
+        indicator.stationId =defaultStationId
+        assert indicator.get_aqindex_url() == \
+            'http://api.gios.gov.pl/pjp-api/rest/aqindex/getIndex/%s' % defaultStationId
+
+    @pytest.mark.parametrize('stationId', [400,10,'test', ''])
+    def test_get_aqindex_url(self, indicator, stationId):
+        assert indicator.get_aqindex_url(stationId) == \
+            'http://api.gios.gov.pl/pjp-api/rest/aqindex/getIndex/%s' % stationId
+
+    @pytest.mark.parametrize('defaultStationId', [400,10,'test', ''])
+    def test_get_sensors_url_default(self, indicator, defaultStationId):
+        indicator.stationId =defaultStationId
+        assert indicator.get_sensors_url() == \
+            'http://api.gios.gov.pl/pjp-api/rest/station/sensors/%s' % defaultStationId
+
+    @pytest.mark.parametrize('stationId', [400,10,'test', ''])
+    def test_get_sensors_url(self, indicator, stationId):
+        assert indicator.get_sensors_url(stationId) == \
+            'http://api.gios.gov.pl/pjp-api/rest/station/sensors/%s' % stationId
