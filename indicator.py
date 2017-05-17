@@ -1,6 +1,7 @@
 import requests
 import json
 import os
+from compat_2to3 import *
 
 
 class Indicator(object):
@@ -35,7 +36,7 @@ class Indicator(object):
         return self._get_url_from_template(self.DETAILS_TEMPLATE)
 
     def get_detail_from_json(self, json_file, *keys):
-        json_obj = json.loads(json_file)
+        json_obj = json.load(json_file)
         try:
             for k in keys:
                 json_obj = json_obj[k]
