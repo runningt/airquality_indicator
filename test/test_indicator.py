@@ -44,3 +44,21 @@ class TestIndicator(object):
     def test_get_details_url(self, indicator):
         assert indicator.get_details_url() == \
             'http://api.gios.gov.pl/pjp-api/rest/station/findAll'
+
+    @pytest.mark.parametrize('json, keys, expected',
+        [('[{}, {"key": "value"}]', (1, "key"), "value"),
+        ('{"key": "value"}', ("key",), "value"),
+        ('{"key": ["value", "value2"]}', ("key", 0), "value")],
+        )
+    def test_get_detail_from_json(self, indicator, json, keys, expected):
+        assert indicator.get_detail_from_json(json, *keys) == expected
+
+    @pytest.mark.parametrize('json, keys',
+        [('[{"key": "value"}]', (1, "key")),
+        ('{"key": "value"}', ("key2",)),
+        ('{}', ("key", 0, 1, 2, 3))]
+        )
+    def test_get_detail_from_json_raised_keyerror(self, indicator, json, keys):
+        with pytest.raises(KeyError) as e:
+            indicator.get_detail_from_json(json, *keys)
+            assert e.args[0] == str(keys)

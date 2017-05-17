@@ -33,3 +33,13 @@ class Indicator(object):
 
     def get_details_url(self):
         return self._get_url_from_template(self.DETAILS_TEMPLATE)
+
+    def get_detail_from_json(self, json_str, *keys):
+        json_obj = json.loads(json_str)
+        try:
+            for k in keys:
+                json_obj = json_obj[k]
+        except (IndexError, KeyError):
+            keys = [str(k) for k in keys]
+            raise KeyError(str(keys))
+        return json_obj
