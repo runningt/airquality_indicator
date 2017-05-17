@@ -1,4 +1,5 @@
 import pytest
+import mock
 from indicator import Indicator
 
 class TestIndicator(object):
