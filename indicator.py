@@ -1,7 +1,6 @@
 import requests
 import json
 import os
-from compat_2to3 import *
 
 
 class Indicator(object):

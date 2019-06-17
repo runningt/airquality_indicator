@@ -2,7 +2,7 @@
 import sys
 
 def main():
-    print 'test'
+    print('test')
     return 0
 
 if __name__ == '__main__':

@@ -1,7 +1,6 @@
 import pytest
 import mock
 from indicator import Indicator
-from compat_2to3 import *
 
 
 class TestIndicator(object):
@@ -54,7 +53,7 @@ class TestIndicator(object):
         ('{"key": ["value", "value2"]}', ("key", 0), "value")],
         )
     def test_get_detail_from_json(self, indicator, json, keys, expected):
-        with mock.patch(BUILTIN_OPEN, mock.mock_open(read_data=json)):
+        with mock.patch( 'builtins.open', mock.mock_open(read_data=json)):
             f = open('/tmp/json', 'rw')
             assert indicator.get_detail_from_json(f, *keys) == expected
 
@@ -64,7 +63,7 @@ class TestIndicator(object):
         ('{}', ("key", 0, 1, 2, 3))]
         )
     def test_get_detail_from_json_raised_keyerror(self, indicator, json, keys):
-        with mock.patch(BUILTIN_OPEN , mock.mock_open(read_data=json)):
+        with mock.patch('builtins.open' , mock.mock_open(read_data=json)):
             with pytest.raises(KeyError) as e:
                 f = open('/tmp/json', 'rw')
                 indicator.get_detail_from_json(f, *keys)
