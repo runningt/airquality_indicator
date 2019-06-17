@@ -36,12 +36,12 @@ class TestIndicator(object):
         assert indicator.get_aqindex_url(stationId) == \
             'http://api.gios.gov.pl/pjp-api/rest/aqindex/getIndex/%s' % stationId
 
-    @pytest.mark.parametrize('defaultStationId, sensorId',
+    @pytest.mark.parametrize('defaultStationId,stationId',
             ((400, 1), (10, 1), (10, 2), ('test', 10), ('', ''), (None, 10)))
-    def test_get_sensor_url(self, indicator, defaultStationId, sensorId):
+    def test_get_sensors_url(self, indicator, defaultStationId, stationId):
         indicator.stationId =defaultStationId
-        assert indicator.get_sensor_url(sensorId) == \
-            'http://api.gios.gov.pl/pjp-api/rest/station/sensors/%s' % sensorId
+        assert indicator.get_sensors_url(stationId) == \
+            'http://api.gios.gov.pl/pjp-api/rest/station/sensors/%s' % stationId
 
     def test_get_all_stations_url(self, indicator):
         assert indicator.get_all_stations_url() == \

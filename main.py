@@ -8,6 +8,8 @@ def main():
     ind = Indicator(stationId)
     print(ind.get_aqindex_url())
     print(ind.get_all_stations_url())
+    print(ind.get_aqindex())
+    print(ind.get_data())
     return 0
 
 if __name__ == '__main__':

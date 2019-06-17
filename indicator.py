@@ -24,8 +24,9 @@ class Indicator(object):
         stationId = stationId if stationId is not None else self.stationId
         return self._get_url_from_template(self.DATA_TEMPLATE, stationId)
 
-    def get_sensor_url(self, sensorId):
-        return self._get_url_from_template(self.SENSOR_TEMPLATE, sensorId)
+    def get_sensors_url(self, stationId=None):
+        stationId = stationId if stationId is not None else self.stationId
+        return self._get_url_from_template(self.SENSOR_TEMPLATE, stationId)
 
     def get_aqindex_url(self, stationId=None):
         stationId = stationId if stationId is not None else self.stationId
@@ -43,3 +44,17 @@ class Indicator(object):
             keys = [str(k) for k in keys]
             raise KeyError(str(keys))
         return json_obj
+
+    def get_res(self, url):
+        result = requests.get(url)
+        return result.json()
+
+    def get_aqindex(self, stationId=None):
+        url = self.get_aqindex_url(stationId)
+        return self.get_res(url)
+
+    def get_data(self, stationId=None):
+        url = self.get_data_url(stationId)
+        return self.get_res(url)
+
+
