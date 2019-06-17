@@ -43,8 +43,8 @@ class TestIndicator(object):
         assert indicator.get_sensor_url(sensorId) == \
             'http://api.gios.gov.pl/pjp-api/rest/station/sensors/%s' % sensorId
 
-    def test_get_details_url(self, indicator):
-        assert indicator.get_details_url() == \
+    def test_get_all_stations_url(self, indicator):
+        assert indicator.get_all_stations_url() == \
             'http://api.gios.gov.pl/pjp-api/rest/station/findAll'
 
     @pytest.mark.parametrize('json, keys, expected',

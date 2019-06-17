@@ -8,7 +8,7 @@ class Indicator(object):
     DATA_TEMPLATE = 'data/getData/{}'
     AQ_INDEX_TEMPLATE = 'aqindex/getIndex/{}'
     SENSOR_TEMPLATE = 'station/sensors/{}'
-    DETAILS_TEMPLATE = 'station/findAll'
+    STATIONS_TEMPLATE = 'station/findAll'
     DEFAULT_STATION_ID = 400
 
     def __init__(self, stationId=DEFAULT_STATION_ID):
@@ -31,8 +31,8 @@ class Indicator(object):
         stationId = stationId if stationId is not None else self.stationId
         return self._get_url_from_template(self.AQ_INDEX_TEMPLATE, stationId)
 
-    def get_details_url(self):
-        return self._get_url_from_template(self.DETAILS_TEMPLATE)
+    def get_all_stations_url(self):
+        return self._get_url_from_template(self.STATIONS_TEMPLATE)
 
     def get_detail_from_json(self, json_file, *keys):
         json_obj = json.load(json_file)
